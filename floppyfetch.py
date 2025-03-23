@@ -202,8 +202,9 @@ def fetch_data_parallel():
         return results
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Fetch system information with a custom border color.")
-    parser.add_argument("-color", type=str, default="yellow", help="Border color for the panel")
+    parser = argparse.ArgumentParser(description="Fetch system information with custom border colors and logos.")
+    parser.add_argument("-color", type=str, nargs='+', default=["yellow"], help="Border colors for the panel")
+    parser.add_argument("-logo", type=str, nargs='+', default=["0"], help="Logos for the ASCII art")
     args = parser.parse_args()
 
     console = Console()
@@ -226,7 +227,10 @@ if __name__ == '__main__':
     table.add_row(Text('CPU:', style=label_color), Text(data['cpu'], style=value_color))
     table.add_row(Text('GPU:', style=label_color), Text(data['gpu'], style=value_color))
     table.add_row(Text('RAM:', style=label_color), Text(data['memory'], style=value_color))
-    logo = """
+
+    # Define logos
+    logos = {
+        "0": """
  _________________
 | | ___________ |o|
 | | ___________ | |
@@ -237,12 +241,39 @@ if __name__ == '__main__':
 |    |       |   ||
 | DD |       |   V|
 |____|_______|____|
-    """
-    logo_text = Text(logo, style=args.color)
-    logo_panel = Panel.fit(logo_text, border_style=args.color, padding=(0, 2))
+        """,
+        "1": r"""
+    / ======= \
+   / _________ \
+  | ___________ |
+  | | -       | |
+  | |         | |
+  | |_________| |
+  \_____________/
+  / ''''''''''' \
+ / ::::::::::::: \
+(_________________)
+        """,
+        "2": r"""
+
+     ,==.-------.  
+    (    ) ====  \  
+    ||  | [][][] |  
+  ,8||  | [][][] |  
+  8 ||  | [][][] |  
+  8 (    ) O O O /  
+  '88`=='-------'  
+
+        """
+    }
+
+    # Use the first logo from the list
+    logo_key = args.logo[0]
+    logo_text = Text(logos.get(logo_key, logos["0"]), style=args.color[0])
+
+    logo_panel = Panel.fit(logo_text, border_style=args.color[0], padding=(0, 2))
     layout = Table.grid(expand=True)
     layout.add_column(justify="left", ratio=1)
     layout.add_column(justify="left", ratio=2)
     layout.add_row(logo_panel, table)
     console.print(Align.left(layout))
-
