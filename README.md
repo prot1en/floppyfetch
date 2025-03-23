@@ -56,30 +56,29 @@ FloppyFetch is a Windows-based clone of Neofetch, crafted in Python. It allows y
      Add the following line to the file:
 
      ```powershell
-     function floppyfetch {
-    param(
-        [string[]]$args = @()
-    )
-
-    # Check for help options
-    if ($args -contains '-h' -or $args -contains '--help') {
-        Write-Host "Usage: floppyfetch [--color COLOR]"
-        Write-Host "Fetch system information with a custom border color."
-        Write-Host ""
-        Write-Host "Options:"
-        Write-Host "  -h, --help    Show this help message and exit"
-        Write-Host "  --color COLOR Border color for the panel"
-        return
-    }
-
-    # Construct the command with any additional arguments, excluding the directory path for help options
-    $directoryPath = (Get-Location).Path
-    $commandArgs = $args -join " "
-    $command = "python $HOME/Desktop/python/floppyfetch/floppyfetch.py $commandArgs"
-
-    # Invoke the command
-    Invoke-Expression $command
-    }
+   function floppyfetch {
+       param(
+           [string[]]$args = @()
+       )
+   
+       # Check for help options
+       if ($args -contains '-h' -or $args -contains '-help') {
+           Write-Host ""
+           Write-Host "Options:"
+           Write-Host "  -h, Show this help message and exit"
+           Write-Host "  -color <COLOR> Border color for the panel"
+   	       Write-Host "  -logo <NUMBER 0-10> Different ASCII art logo"
+           return
+       }
+   
+       # Construct the command with any additional arguments, excluding the directory path for help options
+       $directoryPath = (Get-Location).Path
+       $commandArgs = $args -join " "
+       $command = "python $HOME/Desktop/python/floppyfetch/floppyfetch.py $commandArgs"
+   
+       # Invoke the command
+       Invoke-Expression $command
+   }
      ```
 
    Replace the path to floppyfetch.py with the actual path to your floppyfetch.py file. After saving the file, you can run FloppyFetch using:
@@ -88,15 +87,16 @@ FloppyFetch is a Windows-based clone of Neofetch, crafted in Python. It allows y
    floppyfetch
    ```
 
+   For more commands run
+   
+   ```powershell
+   floppyfetch -h
+   ```
+
 3. **Customize Colors:**
 
    To customize the colors of the ASCII art and border, you can modify the configuration settings within the script or through command-line arguments (run floppyfetch -h or python floppyfetch.py -h for more info).
 
-## Up Next
-
-1. **Multiple ASCII Art Options**
-
-   In the upcoming updates, we plan to introduce a feature that allows you to switch between multiple ASCII art designs for the display screen. Stay tuned for more customization options!
 
 
 
