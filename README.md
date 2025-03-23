@@ -57,28 +57,28 @@ FloppyFetch is a Windows-based clone of Neofetch, crafted in Python. It allows y
 
      ```powershell
      function floppyfetch {
-    param(
-        [string[]]$args = @()
-    )
+        param(
+           [string[]]$args = @()
+          )
 
-    # Check for help options
-    if ($args -contains '-h' -or $args -contains '--help') {
-        Write-Host "Usage: floppyfetch [--color COLOR]"
-        Write-Host "Fetch system information with a custom border color."
-        Write-Host ""
-        Write-Host "Options:"
-        Write-Host "  -h, --help    Show this help message and exit"
-        Write-Host "  --color COLOR Border color for the panel"
-        return
-    }
+        # Check for help options
+        if ($args -contains '-h' -or $args -contains '--help') {
+           Write-Host "Usage: floppyfetch [--color COLOR]"
+           Write-Host "Fetch system information with a custom border color."
+           Write-Host ""
+           Write-Host "Options:"
+           Write-Host "  -h, --help    Show this help message and exit"
+           Write-Host "  --color COLOR Border color for the panel"
+           return
+        }
 
-    # Construct the command with any additional arguments, excluding the directory path for help options
-    $directoryPath = (Get-Location).Path
-    $commandArgs = $args -join " "
-    $command = "python $HOME/Desktop/python/floppyfetch/floppyfetch.py $commandArgs"
+        # Construct the command with any additional arguments, excluding the directory path for help options
+        $directoryPath = (Get-Location).Path
+        $commandArgs = $args -join " "
+        $command = "python $HOME/Desktop/python/floppyfetch/floppyfetch.py $commandArgs"
 
-    # Invoke the command
-    Invoke-Expression $command
+        # Invoke the command
+        Invoke-Expression $command
     }
      ```
 
